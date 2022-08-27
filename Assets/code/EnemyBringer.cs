@@ -25,6 +25,9 @@ public class EnemyBringer : EnemyFather {
         if (stateInfo.IsName("hurt") && stateInfo.normalizedTime > 0.90f) {
             _animator.SetBool("ishurt", false);
             isHurt = false;
+            
+            // 防止攻击后，这个一直为true; 
+            isAttack = false;
         }
         else if (isHurt && !stateInfo.IsName("death") && !stateInfo.IsName("hurt")) {
             // 播放受击动画
