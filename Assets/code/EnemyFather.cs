@@ -33,6 +33,8 @@ public class EnemyFather : MonoBehaviour {
     [HideInInspector] public float limtLeftX;
     [HideInInspector] public float limtRightX;
     [HideInInspector] public float limtY;
+    
+    protected bool isAttack = false;
 
 
     // public GameObject ParentPos;
@@ -61,8 +63,11 @@ public class EnemyFather : MonoBehaviour {
         if (life > 0) {
             // 有生命的时候才能调用这些方法
             hurtAnimator();
-            // 到达目标后的下一步动作行为
-            reachAction();
+
+            if (!isAttack) {
+                // 到达目标后的下一步动作行为
+                reachAction();
+            }
         }
     }
 
@@ -110,8 +115,10 @@ public class EnemyFather : MonoBehaviour {
             _waitTime -= Time.deltaTime;
         }
         else {
-            // 还没到
-            Run(true);
+            if (!isAttack) {
+                // 还没到
+                Run(true);
+            }
             Flip(movePos.position.x < transform.position.x);
         }
     }
@@ -128,7 +135,7 @@ public class EnemyFather : MonoBehaviour {
     }
 
 
-    private void Flip(bool position) {
+    protected void Flip(bool position) {
         if (position) {
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
             // transform.rotation = Quaternion.Euler(0, 0, 0);

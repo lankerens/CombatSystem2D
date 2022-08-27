@@ -221,8 +221,10 @@ MonoBehaviour:
   speed: 1.8
   moveWaitTime: 0.5
   movePos: {fileID: 294655930239525684}
-  ParentPos: {fileID: 64977542234556317, guid: 73c78d349e8a7564eaea74669bdb3042, type: 3}
-  ParantObj: {fileID: 7813468243115009628}
+  currentName: 
+  limtLeftX: 0
+  limtRightX: 0
+  limtY: 0
 --- !u!1 &7813468243115009628
 GameObject:
   m_ObjectHideFlags: 0

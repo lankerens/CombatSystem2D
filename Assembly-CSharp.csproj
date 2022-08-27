@@ -41,15 +41,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\code\stateMachine\IState.cs" />
      <Compile Include="Assets\code\Blood.cs" />
      <Compile Include="Assets\code\EnemyFather.cs" />
      <Compile Include="Assets\code\CameraFollow.cs" />
      <Compile Include="Assets\code\PlayerController.cs" />
+     <Compile Include="Assets\code\AttackSense.cs" />
      <Compile Include="Assets\code\EnemyBringer.cs" />
      <Compile Include="Assets\code\HurtTrigger.cs" />
      <Compile Include="Assets\code\GroundInit.cs" />
      <Compile Include="Assets\code\AnimationEventController.cs" />
-     <Compile Include="Assets\code\AttackSense.cs" />
      <Reference Include="UnityEngine">
      <HintPath>D:\InstallData\UnityHubData\Unity\Hub\Editor\2021.3.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

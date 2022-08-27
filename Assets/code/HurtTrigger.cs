@@ -25,7 +25,7 @@ public class HurtTrigger : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         // Debug.Log(other.Equals(other.GetComponent<BoxCollider2D>()));
         // 是否是敌人对象 并且是个触发器组件
-        if (other.gameObject.CompareTag("Enemy") && other.isTrigger) {
+        if (other.gameObject.CompareTag("Enemy") && other is BoxCollider2D && other.isTrigger) {
             // 伤害计算
             other.GetComponent<EnemyFather>().BeHurt(damage);
             // 触发打击感

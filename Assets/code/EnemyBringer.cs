@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class EnemyBringer : EnemyFather {
     // Update is called once per frame
     void Update() {
         base.Update();
+        attack();
     }
 
 
@@ -46,6 +48,27 @@ public class EnemyBringer : EnemyFather {
                 Destroy(transform.root.gameObject, 0.83f);
                 // Destroy(ParantObj, 0.83f);
             }
+        }
+    }
+
+    /**
+     * 攻击动画
+     */
+    void attack() {
+        // Debug.Log(isAttack);
+        var state = _animator.GetCurrentAnimatorStateInfo(0);
+        if (!isAttack && (Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position)) < 3f) {
+            // 这个一次激活就可以. 
+            _animator.SetTrigger("attackTrigger");
+            // 布尔值需要持续激活
+            // _animator.SetBool("attack", true);
+            Run(false);
+            // 朝向player 根据原图来判断的，原图敌怪是朝左， 所以当用户在敌怪左边，要为true 才是朝向player，反之则false
+            Flip(transform.position.x - FindObjectOfType<PlayerController>().transform.position.x > 0);
+            isAttack = true;
+        } else if ((Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position)) > 3.2f && state.normalizedTime > 1f) {
+            // 距离离开了并且动画播放完毕
+            isAttack = false;
         }
     }
 }
