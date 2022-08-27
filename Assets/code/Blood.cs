@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Blood : MonoBehaviour
-{
+public class Blood : MonoBehaviour {
     // 摧毁时间
     public float timeToDestory;
-    
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         Destroy(gameObject, timeToDestory);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
     }
 }

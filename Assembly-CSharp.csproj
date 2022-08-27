@@ -49,6 +49,7 @@
      <Compile Include="Assets\code\HurtTrigger.cs" />
      <Compile Include="Assets\code\GroundInit.cs" />
      <Compile Include="Assets\code\AnimationEventController.cs" />
+     <Compile Include="Assets\code\AttackSense.cs" />
      <Reference Include="UnityEngine">
      <HintPath>D:\InstallData\UnityHubData\Unity\Hub\Editor\2021.3.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

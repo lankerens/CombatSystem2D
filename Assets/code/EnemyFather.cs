@@ -3,14 +3,14 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using VariablesSaver = Unity.VisualScripting.VariablesSaver;
 
-public class EnemyFather : MonoBehaviour
-{
+public class EnemyFather : MonoBehaviour {
     // 怪物的血量
     public int life;
 
     // 怪物的伤害
     public int damage;
     private BoxCollider2D _boxCollider2D;
+    private Rigidbody2D _rigidbody2D;
 
     protected Animator _animator;
 
@@ -27,13 +27,13 @@ public class EnemyFather : MonoBehaviour
     private float _waitTime;
     public Transform movePos;
 
-    [HideInInspector] public Transform _leftDownPos;
-    [HideInInspector] public Transform _rightUpPos;
+    // [HideInInspector] public Transform _leftDownPos;
+    // [HideInInspector] public Transform _rightUpPos;
     [HideInInspector] public string currentName;
     [HideInInspector] public float limtLeftX;
     [HideInInspector] public float limtRightX;
     [HideInInspector] public float limtY;
-    
+
 
     // public GameObject ParentPos;
     // [HideInInspector]
@@ -42,11 +42,10 @@ public class EnemyFather : MonoBehaviour
 
 
     // Start is called before the first frame update
-    public void Start()
-    {
+    public void Start() {
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
-
+        _rigidbody2D = GetComponent<Rigidbody2D>();
         // Debug.Log(_leftDownPos.position + " -- " + _rightUpPos.position);
 
 
@@ -57,11 +56,9 @@ public class EnemyFather : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
-    {
+    public void Update() {
         myDestroy();
-        if (life > 0)
-        {
+        if (life > 0) {
             // 有生命的时候才能调用这些方法
             hurtAnimator();
             // 到达目标后的下一步动作行为
@@ -69,10 +66,8 @@ public class EnemyFather : MonoBehaviour
         }
     }
 
-    protected virtual void myDestroy()
-    {
-        if (life <= 0)
-        {
+    protected virtual void myDestroy() {
+        if (life <= 0) {
             // 放个动画消失
             Destroy(gameObject);
         }
@@ -80,16 +75,18 @@ public class EnemyFather : MonoBehaviour
 
 
     // 受伤动画
-    protected virtual void hurtAnimator()
-    {
+    protected virtual void hurtAnimator() {
     }
 
     // 怪物受伤
-    public void BeHurt(int damage)
-    {
-        if (life > 0)
-        {
+    public void BeHurt(int damage) {
+        if (life > 0) {
+            // 流血
             Instantiate(blood, transform.position + new Vector3(0, 1), Quaternion.identity);
+            // 朝向玩家
+            // transform.localScale = new Vector3(-player.x, 1, 1);
+            // 击退
+            // _rigidbody2D.velocity = player * 5f;
             // 受伤动画
             isHurt = true;
             // 伤害计算
@@ -98,15 +95,12 @@ public class EnemyFather : MonoBehaviour
     }
 
 
-    public virtual void reachAction()
-    {
+    public virtual void reachAction() {
         // 移动
         transform.position = Vector2.MoveTowards(transform.position, movePos.position, speed * Time.deltaTime);
         // 是否到达目标
-        if (Vector3.Distance(movePos.position, transform.position) < 0.1f)
-        {
-            if (_waitTime <= Mathf.Epsilon)
-            {
+        if (Vector3.Distance(movePos.position, transform.position) < 0.1f) {
+            if (_waitTime <= Mathf.Epsilon) {
                 // 重置数据
                 _waitTime = moveWaitTime;
                 movePos.position = MoveRandPos();
@@ -115,8 +109,7 @@ public class EnemyFather : MonoBehaviour
             Run(false);
             _waitTime -= Time.deltaTime;
         }
-        else
-        {
+        else {
             // 还没到
             Run(true);
             Flip(movePos.position.x < transform.position.x);
@@ -125,26 +118,22 @@ public class EnemyFather : MonoBehaviour
 
 
     // 随机生成移动去的位置
-    protected virtual Vector3 MoveRandPos()
-    {
+    protected virtual Vector3 MoveRandPos() {
         // var y = GameObject.FindWithTag("FirstFlow").transform.position.y;
-        Vector3 randPos = new Vector3(Random.Range(_leftDownPos.position.x, _rightUpPos.position.x),
-            _leftDownPos.position.y);
+        // Vector3 randPos = new Vector3(Random.Range(_leftDownPos.position.x, _rightUpPos.position.x), _leftDownPos.position.y);
+        Vector3 randPos = new Vector3(Random.Range(limtLeftX, limtRightX), limtY);
         // Debug.Log(position.x + " -- " + position1.x);
 
         return randPos;
     }
 
 
-    private void Flip(bool position)
-    {
-        if (position)
-        {
+    private void Flip(bool position) {
+        if (position) {
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
             // transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else
-        {
+        else {
             // 反转180°
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
 
@@ -154,8 +143,7 @@ public class EnemyFather : MonoBehaviour
     }
 
 
-    protected virtual void Run(bool isMove)
-    {
+    protected virtual void Run(bool isMove) {
         // 按下键盘时才会获取到值
         // Debug.Log(Input.GetAxis("Horizontal"));
         // -1 到 1 之间好像

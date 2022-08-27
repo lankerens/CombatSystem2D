@@ -2,49 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBringer : EnemyFather
-{
-
+public class EnemyBringer : EnemyFather {
     // public GameObject ParantObj;
-    
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         base.Start();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         base.Update();
     }
 
-    
+
     // TODO 还可以优化我觉得
     // 受伤动画
-    protected override void hurtAnimator()
-    {
+    protected override void hurtAnimator() {
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("hurt") && stateInfo.normalizedTime > 0.90f)
-        {
+        if (stateInfo.IsName("hurt") && stateInfo.normalizedTime > 0.90f) {
             _animator.SetBool("ishurt", false);
             isHurt = false;
         }
-        else if (isHurt && !stateInfo.IsName("death") && !stateInfo.IsName("hurt"))
-        {
+        else if (isHurt && !stateInfo.IsName("death") && !stateInfo.IsName("hurt")) {
             // 播放受击动画
             _animator.SetBool("ishurt", true);
             _animator.SetTrigger("hurt");
         }
     }
 
-    protected override void myDestroy()
-    {
+    protected override void myDestroy() {
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        if (life <= 0)
-        {
-            if (!stateInfo.IsName("death"))
-            {
+        if (life <= 0) {
+            if (!stateInfo.IsName("death")) {
                 _animator.SetTrigger("death");
                 // 敌人数量-1
                 // GameObject.Find("Ground").GetComponent<GroundInit>().updateEnemyCount(-1);
@@ -58,5 +48,4 @@ public class EnemyBringer : EnemyFather
             }
         }
     }
-
 }
